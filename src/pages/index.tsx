@@ -6,8 +6,6 @@ import { MouseEvent, useEffect, useState } from "react";
 import LoadingIndicator from "./loadingIndicator";
 import Modal from "react-modal";
 import DarkModeToggle from "./useDarkMode";
-import DarkModeStatus from "./darkModeStatus";
-import { link } from "fs";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +23,7 @@ export interface Product {
   images: string[];
 }
 
-const customStyles = {
+var customStyles: { [any: string]: any } | null = {
   content: {
     top: "50%",
     left: "50%",
@@ -33,7 +31,8 @@ const customStyles = {
     bottom: "auto",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
-    background: "rgba(0,0,0,1)",
+    background: "rgba(0,0,0,0.8)",
+    overflow: "visible",
   },
   overlay: {
     backgroundColor: "rgba(0,0,0,0.8)",
@@ -42,28 +41,28 @@ const customStyles = {
 
 //determines if the user has a set theme
 function detectColorScheme() {
-  var darkMode = true; //default to light
+  var notDarkMode = true; //default to light
   // const localStorage: Storage = window.localStorage;
   //local storage is used to override OS theme settings
   if (typeof window !== "undefined") {
     if (window.localStorage.getItem("theme")) {
       if (window.localStorage.getItem("theme") == "dark") {
-        darkMode = false;
+        notDarkMode = false;
       }
     } else if (!window.matchMedia) {
       //matchMedia method not supported
       return false;
     } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
       //OS theme setting detected as dark
-      darkMode = false;
+      notDarkMode = false;
     }
   }
   //dark theme preferred, set document with a `data-theme` attribute
-  if (darkMode) {
-    darkMode = false;
+  if (notDarkMode) {
+    notDarkMode = false;
   }
 
-  return darkMode;
+  return notDarkMode;
 }
 // Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
 Modal.setAppElement("#root");
@@ -78,6 +77,35 @@ export default function Home() {
   const [error, setError] = useState(false);
   const [counter, setCounter] = useState(0);
   const [darkMode, setdarkMode] = useState(detectColorScheme());
+
+  function setCustomStyles() {
+    customStyles = null;
+    var color: string =
+      document.documentElement.getAttribute("data-theme") == "dark"
+        ? "rgba(0,0,0,0.8)"
+        : "rgba(255,255,255,0.86)";
+
+    customStyles = {
+      content: {
+        top: "50%",
+        left: "50%",
+        right: "auto",
+        bottom: "auto",
+        marginRight: "-50%",
+        transform: "translate(-50%, -50%)",
+        background: color,
+        overflow: "visible",
+        border: "outset",
+        outline: "auto",
+        // filter: "blur(2px)",
+        animation: "6s rotate linear infinite",
+      },
+      overlay: {
+        backgroundColor: color,
+      },
+    };
+    return customStyles;
+  }
 
   //increase counter
   const increase = () => {
@@ -112,6 +140,7 @@ export default function Home() {
   }
 
   function afterOpenModal() {
+    // setCustomStyles();
     // references are now sync'd and can be accessed.
     if (subtitle) subtitle.style.color = "#f00";
   }
@@ -121,17 +150,10 @@ export default function Home() {
   }
 
   function cartPOP() {
-    console.log("r(addtocart)?.addEventListener(click,");
     var button = document.getElementById("addtocart");
     var cart = document.getElementById("cart");
     var cartTotal = cart?.getAttribute("data-totalitems");
     var newCartTotal = parseInt(cartTotal ?? "0") + 1;
-
-    var mdl = document.getElementsByClassName(
-      "ReactModal__Content--after-open"
-    );
-    console.log(mdl);
-    mdl.item(1)?.setAttribute("overflow", "visible");
 
     button?.classList.add("sendtocart");
     setTimeout(function () {
@@ -152,7 +174,7 @@ export default function Home() {
       setTimeout(function () {
         cart?.classList.remove("shake");
       }, 500);
-    }, 1000);
+    }, 900);
   }
 
   const renderedProduct = links.find((product) => product.id == selectedId);
@@ -282,7 +304,7 @@ export default function Home() {
             isOpen={modalIsOpen}
             onAfterOpen={afterOpenModal}
             onRequestClose={closeModal}
-            style={customStyles}
+            style={setCustomStyles()}
             contentLabel="Description Modal"
           >
             <div className={styles.grid}>
@@ -303,57 +325,61 @@ export default function Home() {
                 {renderedProduct.title}
               </h2>
 
-              <button onClick={closeModal}></button>
-              {/* <a
-                    href="#"
-                    className={styles.card}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => {e.preventDefault();}}
-                  > */}
+              <button onClick={closeModal}>
+                {" "}
+                <h2 className={inter.className}>&times;</h2>
+              </button>
               <div className="page-wrapper">
                 <button id="addtocart" onClick={cartPOP}>
                   <h2 className={inter.className}>
-                    <span>Add to Cart&thinsp;+</span>
+                    <span
+                      onClick={(e) => {
+                        e.preventDefault();
+                      }}
+                    >
+                      Add to Cart&thinsp;+
+                    </span>
                   </h2>
                   <span className="cart-item"></span>
                 </button>
               </div>
-              {/* </a> */}
 
               <div className={inter.className}>
                 {renderedProduct.description}
               </div>
               <form className={styles.grid}>
-                {/* <input /> */}
-                <a
-                  href="#"
-                  className={styles.card}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    decrease();
-                  }}
-                >
-                  <h2 className={inter.className}>
-                    <span>&lt;-</span>
-                  </h2>
-                </a>
-                <a
-                  href="#"
-                  className={styles.card}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    increase();
-                  }}
-                >
-                  <h2 className={inter.className}>
-                    <span>-&gt;</span>
-                  </h2>
-                </a>
+                {(renderedProductImages?.length ?? 1) > 1 ? (
+                  <>
+                    <a
+                      href="#"
+                      className={styles.card}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        decrease();
+                      }}
+                    >
+                      <h2 className={inter.className}>
+                        <span>&lt;-</span>
+                      </h2>
+                    </a>
+                    <a
+                      href="#"
+                      className={styles.card}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        increase();
+                      }}
+                    >
+                      <h2 className={inter.className}>
+                        <span>-&gt;</span>
+                      </h2>
+                    </a>
+                  </>
+                ) : null}
                 {/* <a
                     href="#"
                     className={styles.card}

@@ -182,7 +182,19 @@ label+.switch {
   align-items: center;
   justify-content: center;
 
+  button:hover {
+    background-color: #a7a7a7;
+    cursor: pointer;
+  }
+
+  button:active {
+    background-color: #bebebe;
+    box-shadow: 0 2px #646464;
+    transform: translateY(4px);
+  }
+
   button {
+    transition: all 75ms;
     padding: 20px;
     border: none;
     background: lighten(#292d48, 65);
@@ -233,7 +245,7 @@ label+.switch {
   right: 20px;
   width: 50px;
   height: 50px;
-  background: #292d48;
+  background: rgba(var(--foreground-rgb), 0.7);
   display: flex;
   align-items: center;
   justify-content: center;
