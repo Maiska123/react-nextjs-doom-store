@@ -42,7 +42,7 @@ var customStyles: { [any: string]: any } | null = {
 //determines if the user has a set theme
 function detectColorScheme() {
   var notDarkMode = true; //default to light
-  // const localStorage: Storage = window.localStorage;
+
   //local storage is used to override OS theme settings
   if (typeof window !== "undefined") {
     if (window.localStorage.getItem("theme")) {
@@ -57,8 +57,8 @@ function detectColorScheme() {
       notDarkMode = false;
     }
   }
-  //dark theme preferred, set document with a `data-theme` attribute
   if (notDarkMode) {
+    // this funny dunno why there
     notDarkMode = false;
   }
 
@@ -97,7 +97,6 @@ export default function Home() {
         overflow: "visible",
         border: "outset",
         outline: "auto",
-        // filter: "blur(2px)",
         animation: "6s rotate linear infinite",
       },
       overlay: {
@@ -107,7 +106,6 @@ export default function Home() {
     return customStyles;
   }
 
-  //increase counter
   const increase = () => {
     if ((renderedProductImages?.length ?? 0) - 1 !== counter) {
       setCounter((count) => count + 1);
@@ -116,7 +114,6 @@ export default function Home() {
     }
   };
 
-  //decrease counter
   const decrease = () => {
     if (counter !== 0) {
       setCounter((count) => count - 1);
@@ -124,7 +121,7 @@ export default function Home() {
       setCounter((renderedProductImages?.length ?? 0) - 1);
     }
   };
-  //reset counter
+
   const reset = () => {
     setCounter(0);
   };
@@ -140,8 +137,6 @@ export default function Home() {
   }
 
   function afterOpenModal() {
-    // setCustomStyles();
-    // references are now sync'd and can be accessed.
     if (subtitle) subtitle.style.color = "#f00";
   }
 
@@ -380,16 +375,6 @@ export default function Home() {
                     </a>
                   </>
                 ) : null}
-                {/* <a
-                    href="#"
-                    className={styles.card}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => {e.preventDefault();}}
-                  >
-                    <h2 className={inter.className}><span>-&gt;</span></h2>
-                  </a> */}
-                {/* <button></button> */}
               </form>
             </div>
           </Modal>

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, ChangeEventHandler } from "react";
+import React, { ChangeEvent } from "react";
 import useDarkMode from "@fisch0920/use-dark-mode";
 import styles from "@/styles/Home.module.css";
 import DarkModeStatus from "./darkModeStatus";
