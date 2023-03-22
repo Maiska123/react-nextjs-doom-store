@@ -97,7 +97,7 @@
 
 .center::before,
 .center::after {
-  content: '';
+  content: "";
   left: 50%;
   position: absolute;
   filter: blur(45px);
@@ -107,6 +107,10 @@
 .logo,
 .thirteen {
   position: relative;
+}
+
+.logoside {
+  transform: translateX(-52px);
 }
 
 .thirteen {
@@ -125,7 +129,7 @@
 
 .thirteen::before,
 .thirteen::after {
-  content: '';
+  content: "";
   position: absolute;
   z-index: -1;
 }
@@ -263,6 +267,7 @@
   }
 
   .logo,
+  .logoside,
   .thirteen img {
     filter: invert(1) drop-shadow(0 0 0.3rem #ffffff70);
   }
