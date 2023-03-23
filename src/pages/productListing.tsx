@@ -25,7 +25,7 @@ const ProductListing = (props: any) => {
         }
         setProductsWithMagic(array);
       });
-    }, 50);
+    }, 500);
 
     const delay = setTimeout(() => {
       setProductsIn(products);

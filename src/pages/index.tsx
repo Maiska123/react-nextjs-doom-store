@@ -9,6 +9,13 @@ import DarkModeToggle from "./useDarkMode";
 import BabylonSearchToolBar from "./searchToolbar";
 import ProductListing from "./productListing";
 import EmptyListing from "./emptyListingInfo";
+import LanguageSwitcher from "./languageSwitcher";
+import { useTranslation, Trans } from "react-i18next";
+
+const lngs: { [key: string]: { nativeName: string } } = {
+  en: { nativeName: "English" },
+  fi: { nativeName: "Finnish" },
+};
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -71,10 +78,12 @@ function detectColorScheme() {
 Modal.setAppElement("#root");
 
 export default function Home() {
+  const { t, i18n, ready } = useTranslation("common");
+
   const [links, setLinks] = useState<Array<Product>>([]);
   const [products, setProducts] = useState<Array<Product>>([]);
   const [name, setName] = useState<{ name: string }>({
-    name: "Loading name...",
+    name: t("loading-name"),
   });
   const [selectedId, setSelectedId] = useState<number>(1);
   const [loading, setLoading] = useState(false);
@@ -239,7 +248,7 @@ export default function Home() {
     }, 100);
 
     return () => {};
-  }, []);
+  }, [ready]);
 
   if (loading) {
     return (
@@ -274,11 +283,56 @@ export default function Home() {
           <p>
             {name?.name},&nbsp;
             <code className={[styles.code, styles.typewriter].join(" ")}>
-              Welcome to hell of a shopping spree.
+              {ready ? t("welcome") : "Welcome!"}
             </code>
           </p>
           <div>
-            By <h1>Sopity Shop BOIII</h1>
+            {ready ? t("provided") : "By"}
+            <h1>Sopity Shop BOIII</h1>
+          </div>
+          {/* <LanguageSwitcher /> */}
+          <div className="App">
+            <div>
+              {Object.keys(lngs).map((lng) => (
+                <button
+                  key={lng}
+                  style={{
+                    filter:
+                      i18n.resolvedLanguage === lng
+                        ? "grayscale(90%)"
+                        : "grayscale(0%)",
+                    background: `url(/${lng == "en" ? "gb" : "fi"}.svg)`,
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: "contain",
+                    height: "48px",
+                    width: "48px",
+                    borderStyle: "none",
+                  }}
+                  type="submit"
+                  onClick={() => i18n.changeLanguage(lng)}
+                >
+                  {/* {lngs[lng].nativeName} {lng} */}
+                </button>
+              ))}
+            </div>
+            <p>
+              <Trans i18nKey="description.part1">
+                <strong title={ready ? t("nameTitle") : ""}>
+                  {t("part1")}
+                </strong>
+
+                {t("description.part1")}
+              </Trans>
+            </p>
+            <a
+              className="App-link"
+              href="https://reactjs.org"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {t("description.part2")}
+            </a>
           </div>
           <DarkModeToggle label="Theme" isOn={darkMode} />
           <div id="cart" className="cart" data-totalitems="0">

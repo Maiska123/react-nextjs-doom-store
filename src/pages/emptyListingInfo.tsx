@@ -3,12 +3,13 @@ import Image from "next/image";
 import { Inter } from "next/font/google";
 import { Product } from ".";
 import styles from "@/styles/Home.module.scss";
+import { useTranslation } from "react-i18next";
 
 const inter = Inter({ subsets: ["latin"] });
 
 const EmptyListing = (props: any) => {
   const { isEmpty } = props;
-
+  const { t, ready } = useTranslation("babylontoolbar");
   const [internalEmpty, setInternalEmpty] = useState(true);
   const [returnValue, setReturnValue] = useState(<></>);
 
@@ -27,14 +28,18 @@ const EmptyListing = (props: any) => {
       isEmpty ? (
         <div className={`${styles.grid} showit nomatch`}>
           <h2 className={inter.className}>
-            {"No Matching Products Found".toLocaleUpperCase()}{" "}
+            {ready
+              ? t("nomatch")
+              : "No Matching Products Found".toLocaleUpperCase()}{" "}
             <span>&times;</span>
           </h2>
         </div>
       ) : (
         <div className={`${styles.grid} hideit nomatch`}>
           <h2 className={inter.className}>
-            {"No Matching Products Found".toLocaleUpperCase()}{" "}
+            {ready
+              ? t("nomatch")
+              : "No Matching Products Found".toLocaleUpperCase()}{" "}
             <span>&times;</span>
           </h2>
         </div>
