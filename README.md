@@ -1,5 +1,17 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a <em>React</em> project with  [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+`Features:`
+
+- Search
+- Active Translations
+- Dark mode
+- Adding to Basket (missing functionality)
+- Scrolling through product pics
+
+`Todo:`
+ - Pagination
+ - Prettify (animations, sluggish search filtering)
+----
 ## demo
 https://user-images.githubusercontent.com/42906162/227043103-5a3f8d46-21ae-44b6-bdab-52c75440ad97.mp4
 
