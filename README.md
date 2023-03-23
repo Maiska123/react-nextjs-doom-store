@@ -12,8 +12,12 @@ This is a <em>React</em> project with  [Next.js](https://nextjs.org/) project bo
  - Pagination
  - Prettify (animations, sluggish search filtering)
 ----
-## demo
+## demo video 1
 https://user-images.githubusercontent.com/42906162/227043103-5a3f8d46-21ae-44b6-bdab-52c75440ad97.mp4
+
+## demo video 2
+https://user-images.githubusercontent.com/42906162/227214177-d04b467d-641f-4907-8412-cb54e6cefb59.mp4
+
 
 ## Getting Started
 
