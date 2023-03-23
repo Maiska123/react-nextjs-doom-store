@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from "react";
 import useDarkMode from "@fisch0920/use-dark-mode";
-import styles from "@/styles/Home.module.css";
+import styles from "@/styles/Home.module.scss";
 import DarkModeStatus from "./darkModeStatus";
 
 const DarkModeToggle = (props: { label: string; isOn: boolean }) => {

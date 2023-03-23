@@ -39,14 +39,67 @@
   font-family: var(--font-mono);
 }
 
+.form {
+  background-color: #4654e1;
+  width: 300px;
+  height: 44px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 0;
+  top: 0;
+
+  button {
+    all: unset;
+    cursor: pointer;
+    width: 44px;
+    height: 44px;
+  }
+
+  svg {
+    color: #fff;
+    fill: currentColor;
+    width: 24px;
+    height: 24px;
+    padding: 10px;
+  }
+}
+
+.input {
+  all: unset;
+  font: 16px system-ui;
+  color: #fff;
+  height: 100%;
+  width: 100%;
+  padding: 6px 10px;
+
+}
+
+.input::placeholder {
+  color: #fff;
+  opacity: 0.7;
+}
+
+.oculäär {
+  display: block;
+  width: 50px !important;
+  height: 50px !important;
+}
+
 .typewriter {
   /* color: #fff; */
   font-family: monospace;
-  overflow: hidden; /* Ensures the content is not revealed until the animation */
-  border-right: 0.15em solid orange; /* The typwriter cursor */
-  white-space: nowrap; /* Keeps the content on a single line */
-  margin: 0 auto; /* Gives that scrolling effect as the typing happens */
-  letter-spacing: 0.15em; /* Adjust as needed */
+  overflow: hidden;
+  /* Ensures the content is not revealed until the animation */
+  border-right: 0.15em solid orange;
+  /* The typwriter cursor */
+  white-space: nowrap;
+  /* Keeps the content on a single line */
+  margin: 0 auto;
+  /* Gives that scrolling effect as the typing happens */
+  letter-spacing: 0.15em;
+  /* Adjust as needed */
   animation-delay: 2s;
   animation: typing 3.5s steps(30, end), blink-caret 0.5s step-end infinite;
 }
@@ -56,6 +109,7 @@
   from {
     width: 0;
   }
+
   to {
     width: 100%;
   }
@@ -63,10 +117,12 @@
 
 /* The typewriter cursor effect */
 @keyframes blink-caret {
+
   from,
   to {
     border-color: transparent;
   }
+
   50% {
     border-color: orange;
   }
@@ -180,11 +236,9 @@
   inset: 0;
   padding: 1px;
   border-radius: var(--border-radius);
-  background: linear-gradient(
-    to bottom right,
-    rgba(var(--tile-start-rgb), 1),
-    rgba(var(--tile-end-rgb), 1)
-  );
+  background: linear-gradient(to bottom right,
+      rgba(var(--tile-start-rgb), 1),
+      rgba(var(--tile-end-rgb), 1));
   background-clip: content-box;
 }
 
@@ -196,9 +250,21 @@
   }
 
   .card:hover span {
-    transform: translateX(4px);
+    width: max-content;
+    transform: translateX(-2px);
+    transition: transform ease 0.5s;
+    transition-delay: 50ms;
+
+    >:after {
+      transform: translateX(-2px);
+      content: "\00a0 Details";
+      color: rgba(var(--card-rgb), 1);
+    }
   }
+
+
 }
+
 
 @media (prefers-reduced-motion) {
   .thirteen::before {
@@ -221,9 +287,13 @@
     margin-bottom: 120px;
     max-width: 320px;
     text-align: center;
+    transition: all 0.6s cubic-bezier(0.32, 0, 0.67, 0)
   }
 
   .card {
+
+    transition: transform ease 0.5s;
+    transition-delay: 50ms;
     padding: 1rem 2.5rem;
   }
 
@@ -263,11 +333,9 @@
     border-radius: 0;
     border: none;
     border-bottom: 1px solid rgba(var(--callout-border-rgb), 0.25);
-    background: linear-gradient(
-      to bottom,
-      rgba(var(--background-start-rgb), 1),
-      rgba(var(--callout-rgb), 0.5)
-    );
+    background: linear-gradient(to bottom,
+        rgba(var(--background-start-rgb), 1),
+        rgba(var(--callout-rgb), 0.5));
     background-clip: padding-box;
     backdrop-filter: blur(24px);
   }
@@ -278,11 +346,9 @@
     inset: auto 0 0;
     padding: 2rem;
     height: 200px;
-    background: linear-gradient(
-      to bottom,
-      transparent 0%,
-      rgb(var(--background-end-rgb)) 40%
-    );
+    background: linear-gradient(to bottom,
+        transparent 0%,
+        rgb(var(--background-end-rgb)) 40%);
     z-index: 1;
   }
 }
@@ -293,6 +359,7 @@
     grid-template-columns: repeat(2, 50%);
   }
 }
+
 /* @media (prefers-color-scheme: dark)  */
 [data-theme="dark"] .vercelLogo {
   filter: invert(1);
@@ -308,6 +375,7 @@
   from {
     transform: rotate(360deg);
   }
+
   to {
     transform: rotate(0deg);
   }

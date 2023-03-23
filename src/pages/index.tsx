@@ -1,11 +1,14 @@
 import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "next/font/google";
-import styles from "@/styles/Home.module.css";
+import styles from "@/styles/Home.module.scss";
 import { MouseEvent, useEffect, useState } from "react";
 import LoadingIndicator from "./loadingIndicator";
 import Modal from "react-modal";
 import DarkModeToggle from "./useDarkMode";
+import BabylonSearchToolBar from "./searchToolbar";
+import ProductListing from "./productListing";
+import EmptyListing from "./emptyListingInfo";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -69,14 +72,53 @@ Modal.setAppElement("#root");
 
 export default function Home() {
   const [links, setLinks] = useState<Array<Product>>([]);
+  const [products, setProducts] = useState<Array<Product>>([]);
   const [name, setName] = useState<{ name: string }>({
     name: "Loading name...",
   });
   const [selectedId, setSelectedId] = useState<number>(1);
   const [loading, setLoading] = useState(false);
+  const [filterEmpty, setFilterEmpty] = useState(false);
   const [error, setError] = useState(false);
   const [counter, setCounter] = useState(0);
   const [darkMode, setdarkMode] = useState(detectColorScheme());
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [search, setSearch] = useState({ query: "" });
+
+  let subtitle: HTMLHeadingElement | null;
+
+  const renderedProduct = links.find((product) => product.id == selectedId);
+  const renderedProductImages = links.find(
+    (product) => product.id == selectedId
+  )?.images;
+
+  function setSearchList(queryString: { query: "" }) {
+    var linkss = links.filter((product) => {
+      return product.title
+        .toLowerCase()
+        .match("" + queryString.query.toLowerCase() + ".*?.*")?.length ?? 0 > 0
+        ? true
+        : false;
+    });
+    queryString.query.length > 1
+      ? productsBeingFiltered(linkss)
+      : setProductsArray(links);
+    setSearch({ query: queryString.query });
+  }
+
+  function setProductsArray(ProductArray: Product[]) {
+    setFilterEmpty(false);
+    setProducts(ProductArray);
+  }
+
+  function productsBeingFiltered(filteredProductArray: Product[]) {
+    setFilterEmpty(false);
+
+    if (filteredProductArray.length == 0) {
+      setFilterEmpty(true);
+    }
+    setProducts(filteredProductArray);
+  }
 
   function setCustomStyles() {
     customStyles = null;
@@ -126,9 +168,6 @@ export default function Home() {
     setCounter(0);
   };
 
-  let subtitle: HTMLHeadingElement | null;
-  const [modalIsOpen, setIsOpen] = useState(false);
-
   function openModal(e: MouseEvent, selectedId: number) {
     e.preventDefault();
     reset();
@@ -172,11 +211,9 @@ export default function Home() {
     }, 900);
   }
 
-  const renderedProduct = links.find((product) => product.id == selectedId);
-  const renderedProductImages = links.find(
-    (product) => product.id == selectedId
-  )?.images;
-
+  /*
+   * useEffect
+   */
   useEffect(() => {
     setLoading(true);
 
@@ -190,6 +227,7 @@ export default function Home() {
         .then((response) => response.json())
         .then((data: { products: Product[] }) => {
           setLinks(data.products);
+          setProducts(data.products);
           setLoading(false);
           fetchName("any");
         })
@@ -213,6 +251,14 @@ export default function Home() {
 
   if (error) {
     throw new Error("Error in fetch");
+  }
+
+  function shownProducts(): Product[] {
+    const productsToDisplay = links.filter((link: Product) => {
+      return products.includes(link) ? true : false;
+    });
+
+    return productsToDisplay;
   }
 
   return (
@@ -263,37 +309,12 @@ export default function Home() {
           />
         </div>
 
-        <div className={styles.grid}>
-          {links.map((link: Product) => (
-            <a
-              key={link.id}
-              href="#"
-              className={styles.card}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => {
-                openModal(e, link.id);
-              }}
-            >
-              <div className={styles.thirteen}>
-                <Image
-                  src={`${new URL(link.thumbnail)}`}
-                  alt="13"
-                  width={50}
-                  height={43}
-                  priority
-                />
-              </div>
-              <h2 className={inter.className}>
-                {link.title.toLocaleUpperCase()} <span>-&gt;</span>
-              </h2>
-              <p className={inter.className}>
-                {link.description}
-                &nbsp;
-              </p>
-            </a>
-          ))}
-        </div>
+        <BabylonSearchToolBar isDarkMode={darkMode} addSearch={setSearchList} />
+
+        <EmptyListing isEmpty={filterEmpty} />
+
+        <ProductListing products={shownProducts()} openModal={openModal} />
+
         {renderedProduct ? (
           <Modal
             isOpen={modalIsOpen}

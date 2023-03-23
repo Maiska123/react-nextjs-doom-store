@@ -86,6 +86,28 @@ a {
   text-decoration: none;
 }
 
+.hideit {
+  display: inherit;
+  width: var(--max-width);
+  max-width: inherit;
+  opacity: 0;
+  transition: all 250ms linear 0.1s !important; // <- the last value defines transition-delay
+}
+
+.showit {
+  display: inherit;
+  width: var(--max-width);
+  max-width: inherit;
+  opacity: 1 !important;
+  transition: all 250ms linear 0.1s !important; // <- the last value defines transition-delay
+}
+
+.nomatch {
+  grid-template-columns: repeat(1, minmax(25%, auto)) !important;
+  justify-items: center;
+  margin: 15px;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
