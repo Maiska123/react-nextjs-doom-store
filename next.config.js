@@ -14,5 +14,8 @@ const nextConfig = {
     ],
   },
 }
+
+// example url
 // https://i.dummyjson.com/data/products/1/thumbnail.jpg
+
 module.exports = {...nextConfig, i18n}

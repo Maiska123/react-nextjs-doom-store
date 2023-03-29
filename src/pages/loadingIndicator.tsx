@@ -1,10 +1,8 @@
-import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "next/font/google";
-import styles from "@/styles/Home.module.scss";
-import { useEffect, useState } from "react";
+import localFont from "next/font/local";
 
-const inter = Inter({ subsets: ["latin"] });
+import styles from "@/styles/Home.module.scss";
+
+const inter = localFont({ src: "./inter.woff2", preload: true });
 
 interface Loading {
   loadingState: boolean;

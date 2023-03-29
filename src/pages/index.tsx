@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
-import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import styles from "@/styles/Home.module.scss";
 import { MouseEvent, useEffect, useState } from "react";
 import LoadingIndicator from "./loadingIndicator";
@@ -9,7 +9,6 @@ import DarkModeToggle from "./useDarkMode";
 import BabylonSearchToolBar from "./searchToolbar";
 import ProductListing from "./productListing";
 import EmptyListing from "./emptyListingInfo";
-import LanguageSwitcher from "./languageSwitcher";
 import { useTranslation, Trans } from "react-i18next";
 
 const lngs: { [key: string]: { nativeName: string } } = {
@@ -17,7 +16,7 @@ const lngs: { [key: string]: { nativeName: string } } = {
   fi: { nativeName: "Finnish" },
 };
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = localFont({ src: "./inter.woff2", preload: true });
 
 export interface Product {
   id: number;
@@ -68,7 +67,7 @@ function detectColorScheme() {
     }
   }
   if (notDarkMode) {
-    // this funny dunno why there
+    // this funny dunno why there, i should really get some sleep
     notDarkMode = false;
   }
 
@@ -290,7 +289,10 @@ export default function Home() {
             {ready ? t("provided") : "By"}
             <h1>Sopity Shop BOIII</h1>
           </div>
-          {/* <LanguageSwitcher /> */}
+
+          {/*
+           * Language selector
+           */}
           <div className="App">
             <div>
               {Object.keys(lngs).map((lng) => (
@@ -318,7 +320,7 @@ export default function Home() {
             </div>
             <p>
               <Trans i18nKey="description.part1">
-                <strong title={ready ? t("nameTitle") : ""}>
+                <strong title={ready ? t("nameTitle") ?? "" : ""}>
                   {t("part1")}
                 </strong>
 
@@ -334,6 +336,10 @@ export default function Home() {
               {t("description.part2")}
             </a>
           </div>
+
+          {/*
+           * Dark mode toggle
+           */}
           <DarkModeToggle label="Theme" isOn={darkMode} />
           <div id="cart" className="cart" data-totalitems="0">
             <Image
@@ -344,6 +350,10 @@ export default function Home() {
             ></Image>
           </div>
         </div>
+
+        {/*
+         * Logo in the center
+         */}
         <div className={styles.center}>
           <Image
             className={styles.logo}
@@ -363,12 +373,24 @@ export default function Home() {
           />
         </div>
 
+        {/*
+         * Search bar
+         */}
         <BabylonSearchToolBar isDarkMode={darkMode} addSearch={setSearchList} />
 
+        {/*
+         * Tells the user that there are no products matching the search
+         */}
         <EmptyListing isEmpty={filterEmpty} />
 
+        {/*
+         * Product listing
+         */}
         <ProductListing products={shownProducts()} openModal={openModal} />
 
+        {/*
+         * Modal for product description
+         */}
         {renderedProduct ? (
           <Modal
             isOpen={modalIsOpen}

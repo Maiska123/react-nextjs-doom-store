@@ -27,7 +27,7 @@ const BabylonSearchToolBar = (props: {
   useEffect(() => {
     setDarkening(darkMode.value);
     return () => {};
-  }, []);
+  }, [darkMode.value]);
 
   return (
     <form

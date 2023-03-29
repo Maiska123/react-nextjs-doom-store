@@ -24,7 +24,9 @@ function LanguageSwitcher() {
       </div>
       <p>
         <Trans i18nKey="description">
-          <strong title={ready ? t("nameTitle") : ""}>{t("part1")}</strong>
+          <strong title={ready ? t("nameTitle") ?? "" : ""}>
+            {t("part1")}
+          </strong>
 
           {t("description.part1")}
         </Trans>

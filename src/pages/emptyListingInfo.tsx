@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import Image from "next/image";
-import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import { Product } from ".";
 import styles from "@/styles/Home.module.scss";
 import { useTranslation } from "react-i18next";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = localFont({ src: "./inter.woff2", preload: true });
 
 const EmptyListing = (props: any) => {
   const { isEmpty } = props;
@@ -13,8 +12,6 @@ const EmptyListing = (props: any) => {
   const [internalEmpty, setInternalEmpty] = useState(true);
   const [returnValue, setReturnValue] = useState(<></>);
 
-  // Set internal `productsIn` state to the updated `draftedPlayers`
-  // only when `draftedPlayers` changes.
   useEffect(() => {
     const fadeDelay = setTimeout(() => {
       let array: Product[] = [];
@@ -50,7 +47,7 @@ const EmptyListing = (props: any) => {
       clearTimeout(delay);
       clearTimeout(fadeDelay);
     };
-  }, [isEmpty]);
+  }, [isEmpty, ready, t]);
 
   return returnValue;
 };

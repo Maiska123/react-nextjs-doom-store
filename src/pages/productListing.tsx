@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import { Product } from ".";
 import styles from "@/styles/Home.module.scss";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = localFont({ src: "./inter.woff2", preload: true });
 
 const ProductListing = (props: any) => {
   const { products, openModal } = props;
@@ -12,8 +12,6 @@ const ProductListing = (props: any) => {
   const [productsIn, setProductsIn] = useState([]);
   const [productsWithMagic, setProductsWithMagic] = useState([] as Product[]);
 
-  // Set internal `productsIn` state to the updated `draftedPlayers`
-  // only when `draftedPlayers` changes.
   useEffect(() => {
     setProductsWithMagic([]);
 
@@ -34,11 +32,7 @@ const ProductListing = (props: any) => {
       clearTimeout(delay);
       clearTimeout(fadeDelay);
     };
-  }, [products]);
-
-  function productsToShow(): any[] {
-    return productsWithMagic;
-  }
+  }, [products, productsIn]);
 
   return productsWithMagic.length == productsIn.length ? (
     <></>

@@ -1,3 +1,19 @@
+
+
+
+> “But what if I were to create "sample-template" and disguise it as my own cooking? Ho-ho-ho-ho-ho. Delightfully devilish, Maiska.”
+
+hence why born,
+
+# Doom PlayStore  <img src="demo/demo.gif" width="550" height="400"/>
+
+Angular, Node and SQL based application to show current date meeting in a specific "room".
+
+| Frontend |  Tested On |
+|--|--|
+| ![Angular](https://img.shields.io/badge/react-%230031.svg?style=for-the-badge&logo=react) | ![Google Chrome](https://img.shields.io/badge/Google%20Chrome-4285F4?style=for-the-badge&logo=GoogleChrome&logoColor=white) |
+
+
 This is a <em>React</em> project with  [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 `Features:`
@@ -9,6 +25,7 @@ This is a <em>React</em> project with  [Next.js](https://nextjs.org/) project bo
 - Scrolling through product pics
 
 `Todo:`
+
  - Pagination
  - Prettify (animations, sluggish search filtering)
 ----
@@ -19,9 +36,21 @@ https://user-images.githubusercontent.com/42906162/227043103-5a3f8d46-21ae-44b6-
 https://user-images.githubusercontent.com/42906162/227214177-d04b467d-641f-4907-8412-cb54e6cefb59.mp4
 
 
-## Getting Started
+## Running Locally
 
-First, run the development server:
+* start the server
+
+```bash
+docker-compose up
+```
+
+* go to http://localhost:3000
+
+* *done*
+
+----
+
+run the development server locally:
 
 ```bash
 npm run dev
