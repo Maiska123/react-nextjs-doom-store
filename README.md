@@ -9,9 +9,9 @@ hence why born,
 
 React app to be next e-commerce success. Just look at it :O :heart:
 
-| Frontend |  Tested On |
-|--|--|
-| ![React](https://img.shields.io/badge/react-%230031.svg?style=for-the-badge&logo=react) | ![Google Chrome](https://img.shields.io/badge/Google%20Chrome-4285F4?style=for-the-badge&logo=GoogleChrome&logoColor=white) |
+| Frontend | With Help of a |  Tested On |
+|--|--|--|
+| ![React](https://img.shields.io/badge/react-%230031.svg?style=for-the-badge&logo=react) | ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white) | ![Google Chrome](https://img.shields.io/badge/Google%20Chrome-4285F4?style=for-the-badge&logo=GoogleChrome&logoColor=white) |
 
 
 This is a <em>React</em> project with  [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
